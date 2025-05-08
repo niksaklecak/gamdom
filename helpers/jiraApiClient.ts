@@ -1,26 +1,15 @@
 import { APIRequestContext, request, APIResponse } from "@playwright/test";
-import { config } from "./envHandler";
+import { config } from "./config";
 
 class JiraApiClient {
-  private apiContext: APIRequestContext | null = null;
-
-  private async getApiContext(): Promise<APIRequestContext> {
-    if (!this.apiContext) {
-      console.log(
-        "JiraApiClient: Attempting to create context with baseURL:",
-        config.jiraApiUrl
-      );
-
-      this.apiContext = await request.newContext({
-        baseURL: config.jiraApiUrl,
-        extraHTTPHeaders: {
-          Authorization: config.jiraBasicAuthToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-    }
-    return this.apiContext;
+  private async createAuthContext(): Promise<APIRequestContext> {
+    return request.newContext({
+      baseURL: config.jiraApiUrl,
+      extraHTTPHeaders: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${config.jiraBasicAuthToken}`,
+      },
+    });
   }
 
   /**
@@ -40,7 +29,7 @@ class JiraApiClient {
     issueTypeName: string = "Task",
     optionalFields?: object
   ): Promise<APIResponse> {
-    const api = await this.getApiContext();
+    const api = await this.createAuthContext();
 
     const baseFields = {
       project: {
@@ -48,7 +37,6 @@ class JiraApiClient {
       },
       summary: summary,
       description: {
-        // Using Atlassian Document Format for description
         type: "doc",
         version: 1,
         content: [
@@ -84,7 +72,7 @@ class JiraApiClient {
    * @returns Promise<APIResponse>
    */
   async getIssue(issueIdOrKey: string): Promise<APIResponse> {
-    const api = await this.getApiContext();
+    const api = await this.createAuthContext();
     return api.get(`/issue/${issueIdOrKey}`);
   }
 
@@ -100,7 +88,7 @@ class JiraApiClient {
     issueIdOrKey: string,
     fieldsToUpdate: object
   ): Promise<APIResponse> {
-    const api = await this.getApiContext();
+    const api = await this.createAuthContext();
     const payload = {
       fields: fieldsToUpdate,
     };
@@ -113,7 +101,7 @@ class JiraApiClient {
    * @returns Promise<APIResponse>
    */
   async deleteIssue(issueIdOrKey: string): Promise<APIResponse> {
-    const api = await this.getApiContext();
+    const api = await this.createAuthContext();
     return api.delete(`/issue/${issueIdOrKey}`);
   }
 
@@ -131,7 +119,7 @@ class JiraApiClient {
     fieldsByKeys?: boolean,
     properties?: string[] // JIRA API docs show this, though your example had it empty
   ): Promise<APIResponse> {
-    const api = await this.getApiContext();
+    const api = await this.createAuthContext();
     const payload: { [key: string]: any } = {
       issueIdsOrKeys: issueIdsOrKeys,
     };
@@ -151,12 +139,13 @@ class JiraApiClient {
     return api.post("/issue/bulkfetch", { data: payload });
   }
 
-  // Optional: A method to dispose of the context if needed, e.g., in a global teardown
-  async dispose(): Promise<void> {
-    if (this.apiContext) {
-      await this.apiContext.dispose();
-      this.apiContext = null;
-    }
+  /**
+   * Gets details for the currently authenticated user.
+   * @returns Promise<APIResponse>
+   */
+  async getMyself(): Promise<APIResponse> {
+    const api = await this.createAuthContext();
+    return api.get("/myself"); // Ensure this is GET
   }
 }
 

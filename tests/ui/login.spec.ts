@@ -1,6 +1,6 @@
 import { test, expect, Page } from "@playwright/test";
 import { LoginPage } from "../../pages/loginPage";
-import { config } from "../../helpers/envHandler";
+import { config } from "../../helpers/config";
 
 test.describe("Gamdom UI Tests @ui", () => {
   test("should login successfully", async ({ page }) => {

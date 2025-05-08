@@ -1,6 +1,6 @@
-import "./helpers/envHandler"; // Load environment variables
+import "./helpers/config"; // Load environment variables
 import { defineConfig, devices } from "@playwright/test";
-import { config } from "./helpers/envHandler"; // Import the config object
+import { config } from "./helpers/config"; // Import the config object
 
 export default defineConfig({
   testDir: "./tests",
