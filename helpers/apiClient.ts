@@ -1,20 +1,14 @@
 import { request, APIRequestContext, APIResponse } from "@playwright/test";
+import { config } from "./envHandler";
 
 export class ApiClient {
   private token: string | null = null;
+  private authBaseUrl: string;
+  private apiBaseUrl: string;
 
-  constructor(
-    private email: string,
-    private password: string,
-    private authBaseUrl: string = process.env.AUTH_BASE_URL || "",
-    private apiBaseUrl: string = process.env.API_BASE_URL || ""
-  ) {
-    if (!this.authBaseUrl) {
-      throw new Error("AUTH_BASE_URL is not defined");
-    }
-    if (!this.apiBaseUrl) {
-      throw new Error("API_BASE_URL is not defined");
-    }
+  constructor(private email: string, private password: string) {
+    this.authBaseUrl = config.authBaseUrl;
+    this.apiBaseUrl = config.apiBaseUrl;
   }
 
   /**

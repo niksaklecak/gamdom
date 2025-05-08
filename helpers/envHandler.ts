@@ -36,8 +36,6 @@ export const config = {
   apiBaseUrl: getEnv("API_BASE_URL"),
   gamdomUsername: getEnv("GAMDOM_USERNAME"),
   gamdomPassword: getEnv("GAMDOM_PASSWORD"),
-  jiraApiUrl: getEnv("JIRA_API_URL"),
-  jiraBasicAuthToken: getEnv("JIRA_BASIC_AUTH_TOKEN"),
-  playwrightBaseUrl: getEnv("PLAYWRIGHT_BASE_URL"),
-  nodeEnv: process.env.NODE_ENV || "development",
+  playwrightBaseUrl: getEnv("BASE_URL"),
+  nodeEnv: process.env.NODE_ENV,
 };
