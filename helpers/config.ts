@@ -29,7 +29,7 @@ function getEnv(key: string): string {
 }
 
 export const config = {
-  jiraApiUrl: getEnv("JIRA_API_URL"),
+  jiraBaseUrl: getEnv("JIRA_BASE_URL"),
   jiraBasicAuthToken: getEnv("JIRA_BASIC_AUTH_TOKEN"),
   jiraProjectKey: getEnv("JIRA_API_PROJECT_KEY"),
   jiraUsername: getEnv("JIRA_API_USERNAME"),

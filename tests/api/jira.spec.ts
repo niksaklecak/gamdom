@@ -6,26 +6,12 @@ const PROJECT_KEY = "QA"; // Project key from the assignment
 test.describe("JIRA API Basic Connectivity @api", () => {
   test("should connect and get current user details (/myself)", async () => {
     const response: APIResponse = await JiraApiClient.getMyself();
-    console.log(`[DEBUG] /myself response status: ${response.status()}`);
-    const responseText = await response.text(); // Get text for logging in case of non-JSON
-    console.log(
-      `[DEBUG] /myself response text: ${responseText.substring(0, 500)}`
-    );
 
-    expect(
-      response.ok(),
-      `Failed to get /myself. Status: ${response.status()}, Response: ${responseText}`
-    ).toBe(true);
-
-    // If response is ok, then try to parse JSON
     const userData = await response.json();
     expect(userData).toHaveProperty("accountId");
     expect(userData).toHaveProperty("emailAddress");
     // The email should match the one used for authentication if the token is correct
     expect(userData.emailAddress).toBe("svetoslav.lazarov92@gmail.com");
-    console.log(
-      `Successfully fetched /myself for user: ${userData.emailAddress}`
-    );
   });
 });
 
