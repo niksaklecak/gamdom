@@ -1,0 +1,28 @@
+{
+  "name": "gamdom-automation-framework",
+  "version": "1.0.0",
+  "description": "Automation framework for Gamdom assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --grep @ui",
+    "test:api": "playwright test --grep @api",
+    "postinstall": "playwright install --with-deps"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "gamdom"
+  ],
+  "author": "Niksa",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.4.5"
+  }
+} 
