@@ -5,7 +5,7 @@ export class RoulettePage extends BasePage {
   readonly rouletteCanvas: Locator;
   constructor(page: Page) {
     super(page);
-    this.rouletteCanvas = page.locator("canvas").first();
+    this.rouletteCanvas = page.locator(".numbers");
   }
 
   async navigate() {

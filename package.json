@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:ui": "playwright test --grep @ui",
+    "test:ui": "playwright test tests/ui",
     "test:api": "playwright test --grep @api",
     "codegen": "playwright codegen",
-    "codegen:site": "playwright codegen $(node -p \"require('./helpers/envHandler').config.playwrightBaseUrl\")"
+    "codegen:site": "playwright codegen --load-storage=state.json $(node -p \"require('./helpers/envHandler').config.playwrightBaseUrl\")",
+    "codegen:api": "playwright codegen --target=javascript --output=tests/api/api-test.js $(node -p \"require('./helpers/envHandler').config.apiUrl\")"
   },
   "keywords": [
     "playwright",

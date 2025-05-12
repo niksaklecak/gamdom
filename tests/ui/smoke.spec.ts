@@ -27,7 +27,8 @@ my_test.describe("Gamdom UI Test Orignals @ui", () => {
     await landingPage.diceButton.click();
     const dicePage = new DicePage(authenticatedPage);
     await dicePage.loaded();
-    await expect(dicePage.diceCanvas).toBeVisible();
+    await expect(dicePage.rollDiceBtn).toBeVisible();
+    await expect(dicePage.resultWrapper).toBeVisible();
   });
 
   my_test("test Roulette Game Load", async ({ authenticatedPage }) => {
@@ -51,6 +52,6 @@ my_test.describe("Gamdom UI Test Orignals @ui", () => {
     await landingPage.hiloButton.click();
     const hiloPage = new HiloPage(authenticatedPage);
     await hiloPage.loaded();
-    await expect(hiloPage.hiloCanvas).toBeVisible();
+    await expect(hiloPage.hiloHiLoBetButtons).toBeVisible();
   });
 });

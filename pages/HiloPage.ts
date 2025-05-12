@@ -2,10 +2,10 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class HiloPage extends BasePage {
-  readonly hiloCanvas: Locator;
+  readonly hiloHiLoBetButtons: Locator;
   constructor(page: Page) {
     super(page);
-    this.hiloCanvas = page.locator("canvas").first();
+    this.hiloHiLoBetButtons = page.getByTestId("hiloHiLoBetButtons");
   }
 
   async navigate() {
