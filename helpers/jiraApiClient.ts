@@ -8,6 +8,8 @@ class JiraApiClient {
       extraHTTPHeaders: {
         Accept: "application/json",
         Authorization: `Basic ${config.jiraBasicAuthToken}`,
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
       },
     });
   }
@@ -67,6 +69,8 @@ class JiraApiClient {
       data: payload,
       headers: {
         "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
       },
     });
   }
@@ -78,7 +82,13 @@ class JiraApiClient {
    */
   async getIssue(issueIdOrKey: string): Promise<APIResponse> {
     const api = await this.createApiContext();
-    return api.get(`/rest/api/3/issue/${issueIdOrKey}`);
+    return api.get(`/rest/api/3/issue/${issueIdOrKey}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
+      },
+    });
   }
 
   /**
@@ -101,6 +111,8 @@ class JiraApiClient {
       data: payload,
       headers: {
         "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
       },
     });
   }
@@ -112,7 +124,13 @@ class JiraApiClient {
    */
   async deleteIssue(issueIdOrKey: string): Promise<APIResponse> {
     const api = await this.createApiContext();
-    return api.delete(`/rest/api/3/issue/${issueIdOrKey}`);
+    return api.delete(`/rest/api/3/issue/${issueIdOrKey}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
+      },
+    });
   }
 
   /**
@@ -150,6 +168,8 @@ class JiraApiClient {
       data: payload,
       headers: {
         "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
       },
     });
   }
@@ -160,8 +180,14 @@ class JiraApiClient {
    */
   async getMyself(): Promise<APIResponse> {
     const api = await this.createApiContext();
-    return api.get("/rest/api/3/myself");
+    return api.get("/rest/api/3/myself", {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Atlassian-Token": "no-check",
+        "User-Agent": "PlaywrightAPI/1.0",
+      },
+    });
   }
 }
 
-export default new JiraApiClient();
+export const jiraApiClient = new JiraApiClient();
