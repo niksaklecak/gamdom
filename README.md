@@ -10,10 +10,10 @@ This project contains an automation test framework for the Gamdom QA assignment,
   - **Design Pattern**: Page Object Model (POM) is used for UI tests, located in the `pages` directory.
   - UI tests are located in `tests/ui`.
 - **API Automation**: Playwright's API testing capabilities are leveraged, with an Axios-based API client for JIRA interactions.
-  - The JIRA API client is in `helpers/apiClient.ts`.
+  - The JIRA API client is in `helpers/jiraApiClient`.
   - API tests are located in `tests/api`.
 - **Reporting**: Playwright HTML reporter is configured.
-- **Utilities**: Common helper functions can be found in `helpers/testUtils.ts`.
+- **Utilities**: Common helper functions can be found in `helpers/utils.ts`.
 
 ## Prerequisites
 
@@ -37,16 +37,10 @@ This project contains an automation test framework for the Gamdom QA assignment,
     npm install
     ```
 
-    Or using yarn:
-
-    ```bash
-    yarn install
-    ```
-
     This command will also run `playwright install --with-deps` (due to the `postinstall` script in `package.json`) to download the necessary browser binaries.
 
 4.  **Environment Variables (Optional but Recommended for JIRA API Token):**
-    While the JIRA API token is currently hardcoded in `helpers/apiClient.ts` for simplicity in this assignment, in a real-world scenario, it's highly recommended to manage sensitive data like API tokens using environment variables.
+    While the JIRA API token is currently hardcoded in `helpers/jiraApiClient.ts` for simplicity in this assignment, in a real-world scenario, it's highly recommended to manage sensitive data like API tokens using environment variables.
     For example, you could create a `.env` file (and add it to `.gitignore`) with:
     ```
     JIRA_API_TOKEN=your_base64_encoded_jira_token
@@ -102,7 +96,7 @@ This project contains an automation test framework for the Gamdom QA assignment,
 - **Run a specific test file:**
 
   ```bash
-  npx playwright test tests/ui/example.spec.ts
+  npx playwright test tests/ui/smoke.spec.ts
   ```
 
 - **View HTML Report:**
@@ -121,22 +115,13 @@ gamdom-automation-framework/
 │   └── api/                 # API test specifications
 │       └── jira.spec.ts
 ├── pages/                  # Page Object Model classes
-│   ├── basePage.ts
-│   └── loginPage.ts
+│   ├── BasePage.ts
+│   └── LoginPage.ts
 ├── helpers/                # Utility functions and API clients
-│   ├── apiClient.ts        # JIRA API client using Axios
-│   └── testUtils.ts
+│   ├── jiraApiClient.ts        # JIRA API client using Axios
+│   └── utils.ts
 ├── playwright.config.ts    # Playwright configuration
 ├── package.json            # Project dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
 └── README.md               # This file
 ```
-
-## Next Steps for Assignment
-
-1.  **Part 1: Exploratory Analysis** - Complete your exploratory testing of `qa-test-playground.teamgamdom.com` and document the 5 key functional areas.
-2.  **Implement UI Test Scenarios**:
-    - Update selectors in `pages/loginPage.ts` and other page objects you create to match the actual website elements.
-    - Implement the three representative UI test scenarios from Part 1, including the mandatory Originals game betting scenario in `tests/ui/`.
-3.  **Refine API Tests**: The current API tests in `tests/api/jira.spec.ts` provide a CRUD workflow. Ensure they meet all requirements for error validation and logical flow.
-4.  **Review and Document**: Ensure all code is clean, well-organized, and the `README.md` is complete and clear.
